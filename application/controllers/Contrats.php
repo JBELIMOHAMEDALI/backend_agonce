@@ -11,28 +11,20 @@ class Contrats extends REST_Controller
 		Header('Access-Control-Allow-Origin: *'); //for allow any domain, insecure
 		Header('Access-Control-Allow-Headers: *'); //for allow any headers, insecure
 		Header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
-		//$this->load->model("Model_entretien");
+		$this->load->model("Modele_contrats");
 	}
 
 	public function add_Contrats_post()
 	{
 		$data = array(
-			'nom' => $this->input->post('nom'),
-			'soc' => $this->input->post('soc'),
-			'cin' => $this->input->post('cin'),
-			'tel' => $this->input->post('tel'),
-			'mail' =>  $this->input->post('mail'),
-			'objet' =>  $this->input->post('objet'),
-			'date_travail' =>  $this->input->post('date_travail'),
-			'autre' =>  $this->input->post('autre'),
-			'lieu' =>  $this->input->post('lieu'),
-			'date_recp' =>  $this->input->post('date_recp'),
-			'lieu_recp' =>  $this->input->post('lieu_recp'),
-			'prix' =>  $this->input->post('prix'),
+			'autre' => $this->input->post('autre'),
+			'lieu' => $this->input->post('lieu'),
+			'date_recp' => $this->input->post('date_recp'),
+			'lieu_recp' => $this->input->post('lieu_recp'),
 			'avance' =>  $this->input->post('avance'),
-			'reste' =>  $this->input->post('reste'),
-			'date_paiement' =>  $this->input->post('date_paiement'),
+			'id_devi' =>  $this->input->post('id_devi'),
 		);
+
 
 		$create = $this->Model_generale->add_fn($data,"contrats");
 		if ($create) {
@@ -52,24 +44,18 @@ class Contrats extends REST_Controller
 	}
 	public function update_Contrats_post () {
 		$data = array(
-			'nom' => $this->input->post('nom'),
-			'soc' => $this->input->post('soc'),
-			'cin' => $this->input->post('cin'),
-			'tel' => $this->input->post('tel'),
-			'mail' =>  $this->input->post('mail'),
-			'objet' =>  $this->input->post('objet'),
-			'date_travail' =>  $this->input->post('date_travail'),
-			'autre' =>  $this->input->post('autre'),
-			'lieu' =>  $this->input->post('lieu'),
-			'date_recp' =>  $this->input->post('date_recp'),
-			'lieu_recp' =>  $this->input->post('lieu_recp'),
+			'autre' => $this->input->post('autre'),
+			'lieu' => $this->input->post('lieu'),
+			'date_recp' => $this->input->post('date_recp'),
+			'lieu_recp' => $this->input->post('lieu_recp'),
 			'prix' =>  $this->input->post('prix'),
 			'avance' =>  $this->input->post('avance'),
 			'reste' =>  $this->input->post('reste'),
-			'date_paiement' =>  $this->input->post('date_paiement'),
+			'id_devi' =>  $this->input->post('id_devi'),
 		);
+
 		$id=$this->input->post("id",TRUE);
-		$update=$this->Model_generale->update_general($data,$id,"contrats","id");
+		$update=$this->Model_generale->update_general($data,$id,"contrats","id_contrat ");
 		if($update==true) {
 			$res=array (
 				"errorer" =>false,
@@ -86,6 +72,91 @@ class Contrats extends REST_Controller
 
 		}
 	}
+	public function get_all_Contrant_Get()
+	{
+		$data = $this->Modele_contrats->getAllContrant();
+		$total = count($data);
+		if ($total != 0) {
+			$res = array(
+				'erorer' => false,
+				'msg' => $data
+
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		} else {
+			$res = array(
+				'erorer' => true,
+				'msg' => "Pas Des Donne "
+			);
+
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
+	}
+	public function get_all_Contrant_by_client_Get()
+	{
+		$id = $this->input->get('id', TRUE);
+		$data = $this->Modele_contrats->getContraBayClient($id);
+		$total = count($data);
+		if ($total != 0) {
+			$res = array(
+				'erorer' => false,
+				'msg' => $data
+
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		} else {
+			$res = array(
+				'erorer' => true,
+				'msg' => "Pas Des Donne "
+			);
+
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
+	}
+
+	public function get_all_Contrant_Detaile_Get()
+	{
+		$id = $this->input->get('id', TRUE);
+		$data = $this->Modele_contrats->getDetailsContra($id);
+		$total = count($data);
+		if ($total != 0) {
+			$res = array(
+				'erorer' => false,
+				'msg' => $data
+
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		} else {
+			$res = array(
+				'erorer' => true,
+				'msg' => "Pas Des Donne "
+			);
+
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
+	}
+	public function get_all_Contrant_totale_Prix_Get()
+	{
+		$id = $this->input->get('id', TRUE);
+		$data = $this->Modele_contrats->getSumPrixContra($id);
+		$total = count($data);
+		if ($total != 0) {
+			$res = array(
+				'erorer' => false,
+				'msg' => $data
+
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		} else {
+			$res = array(
+				'erorer' => true,
+				'msg' => "Pas Des Donne "
+			);
+
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
+	}
+	//
 
 
 }

@@ -36,9 +36,9 @@ class Devi extends REST_Controller
 		}
 
 	}
-	public function update_Devispost () {
+	public function update_Devis_post () {
 		$data = array(
-			'id_client' => $this->input->post('id_client'),
+			'id_devis' => $this->input->post('id_devis'),
 		);
 		$id=$this->input->post("id",TRUE);
 		$update=$this->Model_generale->update_general($data,$id,"devi","id_devi");
@@ -61,6 +61,94 @@ class Devi extends REST_Controller
 	public function get_all_Devi_Get()
 	{
 		$data = $this->Modele_Devi->getAllDevi();
+		$total = count($data);
+		if ($total != 0) {
+			$res = array(
+				'erorer' => false,
+				'msg' => $data
+
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		} else {
+			$res = array(
+				'erorer' => true,
+				'msg' => "Pas Des Donne "
+			);
+
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
+	}
+	public function get_all_Detaile_Devi_Get()
+	{
+		$id = $this->input->get('id', TRUE);
+		$data = $this->Modele_Devi->getAllDetaileDevi($id);
+		$total = count($data);
+		if ($total != 0) {
+			$res = array(
+				'erorer' => false,
+				'msg' => $data
+
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		} else {
+			$res = array(
+				'erorer' => true,
+				'msg' => "Pas Des Donne "
+			);
+
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
+	}
+	public function get_Devi_bay_client_Get()
+	{
+		$id = $this->input->get('id', TRUE);
+
+		$data = $this->Modele_Devi->getDeviBayCient($id);
+		$total = count($data);
+		if ($total != 0) {
+			$res = array(
+				'erorer' => false,
+				'msg' => $data
+
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		} else {
+			$res = array(
+				'erorer' => true,
+				'msg' => "Pas Des Donne "
+			);
+
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
+	}
+
+	public function get_Devi_Detaile_Print_Get()
+	{
+		$id = $this->input->get('id', TRUE);
+
+		$data = $this->Modele_Devi->getDetaileDevisPrint($id);
+		$total = count($data);
+		if ($total != 0) {
+			$res = array(
+				'erorer' => false,
+				'msg' => $data
+
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		} else {
+			$res = array(
+				'erorer' => true,
+				'msg' => "Pas Des Donne "
+			);
+
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
+	}
+	public function get_Devi_tt_prix_Get()
+	{
+		$id = $this->input->get('id', TRUE);
+
+		$data = $this->Modele_Devi->getSomeDevisPrint($id);
 		$total = count($data);
 		if ($total != 0) {
 			$res = array(

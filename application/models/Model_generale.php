@@ -28,19 +28,12 @@ class Model_generale extends CI_Model
 		$query=$this->db->get();
 		return $resulta = $query->result_array();
 	}
-	public function login($email, $password,$tabName) {
+	public function login($email, $password) {
 		if($email && $password) {
-			$sql = "SELECT * FROM ".$tabName." WHERE email = ? and ".$tabName.".statut = 1";
-			$query = $this->db->query($sql, array($email));
+			$sql = "select * from user where email= '".$email." ' and user.password= '".$password."'";
+			$query = $this->db->query($sql);
 			if($query->num_rows() == 1) {
-				$result = $query->row_array();
-				$hash_password = password_verify($password, $result['password']);
-				if($hash_password === true) {
-					return $result;
-				}
-				else {
-					return false;
-				}
+				$result = $query->row_array();return $result;
 			}
 			else {
 				return false;
@@ -63,7 +56,23 @@ class Model_generale extends CI_Model
 		}
 
 	}
-
-
+	public function countClient()
+	{
+		$sql="SELECT count(client.id_client) as nbr_cl from client";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+	public function countDevis()
+	{
+		$sql="SELECT count(devi.id_devi) as nbr_dev from devi";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+	public function countContra()
+	{
+		$sql="SELECT count(contrats.id_contrat) as nbr_cont from contrats";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
 
 }

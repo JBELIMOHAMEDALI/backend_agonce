@@ -19,10 +19,9 @@ class Generale extends REST_Controller
 	}
 	public function login_get()
 	{
-		$tabName = $this->input->get('tabname', TRUE);
 		$email = $this->input->get('email', TRUE);
 		$pass = $this->input->get('password', TRUE);
-		$data = $this->Model_generale->login($email, $pass, $tabName);
+		$data = $this->Model_generale->login($email, $pass);
 		if ($data) {
 			$res = array(
 				'erorer' => false,
@@ -98,6 +97,68 @@ class Generale extends REST_Controller
 				'erorer' => true,
 				'msg' => "Suppression n'a pas réussi"
 			);
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
+	}
+
+	public function nbr_client_Get()
+	{
+
+		$data = $this->Model_generale->countClient();
+		$total = count($data);
+		if ($total != 0) {
+			$res = array(
+				'erorer' => false,
+				'msg' => $data
+
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		} else {
+			$res = array(
+				'erorer' => true,
+				'msg' => "Pas Des Donne "
+			);
+
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
+	}
+	public function nbr_Devis_Get()
+	{
+		$data = $this->Model_generale->countDevis();
+		$total = count($data);
+		if ($total != 0) {
+			$res = array(
+				'erorer' => false,
+				'msg' => $data
+
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		} else {
+			$res = array(
+				'erorer' => true,
+				'msg' => "Pas Des Donne "
+			);
+
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
+	}
+	public function nbr_Contra_Get()
+	{
+		$data = $this->Model_generale->countContra();
+		$total = count($data);
+		if ($total != 0) {
+			$res = array(
+				'erorer' => false,
+				'msg' => $data
+
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		} else {
+			$res = array(
+				'erorer' => true,
+				'msg' => "Pas Des Donne "
+			);
+
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
 	}

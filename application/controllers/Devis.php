@@ -13,20 +13,15 @@ class Devis extends REST_Controller
 		Header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
 		//$this->load->model("Model_entretien");
 	}
-
-
 	public function add_Devis_post()
 	{
-
 		$data = array(
-			'service' => $this->input->post('service'),
+			'id_devi_g' => $this->input->post('id_devi_g'),
 			'info' => $this->input->post('info'),
 			'qte' => $this->input->post('qte'),
 			'puht' => $this->input->post('puht'),
 			'tva' =>  $this->input->post('tva'),
 			'tht' =>  $this->input->post('tht'),
-			'id_client' =>  $this->input->post('id_client'),
-
 		);
 
 		$create = $this->Model_generale->add_fn($data,"devis");
@@ -47,16 +42,14 @@ class Devis extends REST_Controller
 	}
 	public function update_Devis_post () {
 		$data = array(
-			'service' => $this->input->post('service'),
+			'id_devi_g' => $this->input->post('id_devi_g'),
 			'info' => $this->input->post('info'),
 			'qte' => $this->input->post('qte'),
 			'puht' => $this->input->post('puht'),
 			'tva' =>  $this->input->post('tva'),
-			'tht' =>  $this->input->post('tht'),
-			'id_client' =>  $this->input->post('id_client'),
 		);
 		$id=$this->input->post("id",TRUE);
-		$update=$this->Model_generale->update_general($data,$id,"devis","id");
+		$update=$this->Model_generale->update_general($data,$id,"devis","id_devis");
 		if($update==true) {
 			$res=array (
 				"errorer" =>false,
